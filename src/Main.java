@@ -3,11 +3,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.io.PrintStream;
 import java.io.Reader;
 import java.net.URL;
 import java.nio.charset.Charset;
-import java.util.Scanner;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,25 +19,20 @@ public class Main
   public static void main(String[] args)
     throws IOException, JSONException
   {
-    Scanner in = new Scanner(System.in);
-    System.out.println(welcome);
-    String s;
-    do
+	if(args.length!=1 || isWord(args[0])==false){
+		System.err.println("The format of your input is incorrect, please insert the name of a city.");
+		System.exit(0);
+	}
+	input = args[0];
+    JSONArray json = readJsonFromUrl(url + input);
+    if (json.length() == 0)
     {
-      System.out.println("Please insert the name of the city below.");
-      getValidInput(in);
-      JSONArray json = readJsonFromUrl(url + input);
-      while (json.length() == 0)
-      {
-        System.out.println("There is no information about " + input + ", please insert another name.");
-        getValidInput(in);
-        json = readJsonFromUrl(url + input);
-      }
-      printer(json, input);
-      s = in.next();
-    } while (s.equals("Y"));
-    in.close();
+      System.out.println("There is no information about " + input + ".");
+      System.exit(0);
+    }
+    printer(json, input);
   }
+  
   
   public static boolean isWord(String s)
   {
@@ -56,20 +49,6 @@ public class Main
     return true;
   }
   
-  public static void getValidInput(Scanner in)
-  {
-    input = in.next();
-    Boolean state = Boolean.valueOf(false);
-    while (!state.booleanValue())
-    {
-      state = Boolean.valueOf(isWord(input));
-      if (!state.booleanValue())
-      {
-        System.out.println("This input is not valid, please insert a new one.");
-        input = in.next();
-      }
-    }
-  }
   
   private static String readAll(Reader rd)
     throws IOException
@@ -82,6 +61,8 @@ public class Main
     }
     return sb.toString();
   }
+  
+  
   
   public static JSONArray readJsonFromUrl(String url)
     throws IOException, JSONException
@@ -99,6 +80,8 @@ public class Main
       is.close();
     }
   }
+  
+  
   
   public static void printer(JSONArray array, String input)
     throws JSONException, IOException
@@ -123,6 +106,6 @@ public class Main
     }
     fw.write(sb.toString());
     fw.close();
-    System.out.println("Your query has been saved!\nDo you wish to continue?(Y/n)");
+    System.out.println(input+".csv was successfully created!");
   }
 }
