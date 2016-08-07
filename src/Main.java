@@ -33,7 +33,7 @@ public class Main
     printer(json, input);
   }
   
-  
+  //Checks if input has only letters
   public static boolean isWord(String s)
   {
     char[] chars = s.toCharArray();
@@ -49,7 +49,7 @@ public class Main
     return true;
   }
   
-  
+  //Used in readJsonFromUrl, transforms data into String
   private static String readAll(Reader rd)
     throws IOException
   {
@@ -63,7 +63,7 @@ public class Main
   }
   
   
-  
+  //Fetches the data from the API
   public static JSONArray readJsonFromUrl(String url)
     throws IOException, JSONException
   {
@@ -82,7 +82,7 @@ public class Main
   }
   
   
-  
+  //Creates csv (CITY_NAME.csv) file with the requested data
   public static void printer(JSONArray array, String input)
     throws JSONException, IOException
   {
