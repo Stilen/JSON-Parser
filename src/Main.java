@@ -16,14 +16,13 @@ public class Main
   static String welcome = "This app returns the ID, name, type, latitude and longitude of one city.";
   static String input;
   
-  public static void main(String[] args)
-    throws IOException, JSONException
+  public static void main(String[] args) throws IOException, JSONException
   {
-	if(args.length!=1 || isWord(args[0])==false){
-		System.err.println("The format of your input is incorrect, please insert the name of a city.");
-		System.exit(0);
-	}
-	input = args[0];
+    if(args.length!=1 || isWord(args[0])==false){
+      System.err.println("The format of your input is incorrect, please insert the name of a city.");
+      System.exit(0);
+    }
+    input = args[0];
     JSONArray json = readJsonFromUrl(url + input);
     if (json.length() == 0)
     {
